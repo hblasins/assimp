@@ -280,6 +280,21 @@ enum aiTextureType
      *  but is excluded from any further postprocessing.
     */
     aiTextureType_UNKNOWN = 0xC,
+    
+    /** Metallic texture
+     *
+     *  Describes how metallic or insulating a surface is. This is
+     *  one of the texture types used in the Physics-Based-Rendering (PBR)
+     *  workflows
+     */
+    aiTextureType_METALLIC = 0xD,
+    
+    /** Roughness texture
+     *
+     *  Describes how rough the texture is. Quantity used by microfaceted
+     *  appearance models.
+     */
+    aiTextureType_ROUGHNESS = 0xE,
 
 
 #ifndef SWIG
@@ -957,6 +972,12 @@ extern "C" {
 
 #define AI_MATKEY_TEXTURE_REFLECTION(N) \
     AI_MATKEY_TEXTURE(aiTextureType_REFLECTION,N)
+    
+#define AI_MATKEY_TEXTURE_METALLIC(N) \
+    AI_MATKEY_TEXTURE(aiTextureType_METALLIC,N)
+    
+#define AI_MATKEY_TEXTURE_ROUGHNESS(N) \
+    AI_MATKEY_TEXTURE(aiTextureType_ROUGHNESS,N)
 
 //! @endcond
 
@@ -997,6 +1018,12 @@ extern "C" {
 
 #define AI_MATKEY_UVWSRC_REFLECTION(N)  \
     AI_MATKEY_UVWSRC(aiTextureType_REFLECTION,N)
+    
+#define AI_MATKEY_UVWSRC_METALLIC(N)  \
+    AI_MATKEY_UVWSRC(aiTextureType_METALLIC,N)
+    
+#define AI_MATKEY_UVWSRC_ROUGHNESS(N)  \
+    AI_MATKEY_UVWSRC(aiTextureType_ROUGHNESS,N)
 
 //! @endcond
 // ---------------------------------------------------------------------------

@@ -60,8 +60,8 @@ static const std::string DiffuseTexture      = "map_Kd";
 static const std::string AmbientTexture      = "map_Ka";
 static const std::string SpecularTexture     = "map_Ks";
 static const std::string OpacityTexture      = "map_d";
-static const std::string EmissiveTexture    = "map_emissive";
-static const std::string EmissiveTexture_1  = "map_Ke";
+static const std::string EmissiveTexture     = "map_emissive";
+static const std::string EmissiveTexture_1   = "map_Ke";
 static const std::string BumpTexture1        = "map_bump";
 static const std::string BumpTexture2        = "map_Bump";
 static const std::string BumpTexture3        = "bump";
@@ -69,6 +69,8 @@ static const std::string NormalTexture       = "map_Kn";
 static const std::string ReflectionTexture   = "refl";
 static const std::string DisplacementTexture = "disp";
 static const std::string SpecularityTexture  = "map_ns";
+static const std::string MetallicTexture     = "map_Pm";
+static const std::string RoughnessTexture    = "map_Pr";
 
 // texture option specific token
 static const std::string BlendUOption       = "-blendu";
@@ -163,6 +165,9 @@ void ObjFileMtlImporter::load()
                 }
                 m_DataIt = skipLine<DataArrayIt>( m_DataIt, m_DataItEnd, m_uiLine );
             }
+            break;
+        case 'p':
+        case 'P':
             break;
         case 'T':
             {
@@ -367,6 +372,14 @@ void ObjFileMtlImporter::getTexture() {
         // Specularity scaling (glossiness)
         out = & m_pModel->m_pCurrentMaterial->textureSpecularity;
         clampIndex = ObjFile::Material::TextureSpecularityType;
+    } else if (!ASSIMP_strincmp( pPtr, MetallicTexture.c_str(), static_cast<unsigned int>(MetallicTexture.size()) ) ) {
+        // Metallic scaling
+        out = & m_pModel->m_pCurrentMaterial->textureMetallic;
+        clampIndex = ObjFile::Material::TextureMetallicType;
+    } else if (!ASSIMP_strincmp( pPtr, RoughnessTexture.c_str(), static_cast<unsigned int>(RoughnessTexture.size()) ) ) {
+        // Roughness scaling
+        out = & m_pModel->m_pCurrentMaterial->textureRoughness;
+        clampIndex = ObjFile::Material::TextureRoughnessType;
     } else {
         DefaultLogger::get()->error("OBJ/MTL: Encountered unknown texture type");
         return;

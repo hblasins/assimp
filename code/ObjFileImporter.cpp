@@ -719,6 +719,26 @@ void ObjFileImporter::createMaterials(const ObjFile::Model* pModel, aiScene* pSc
                 addTextureMappingModeProperty(mat, aiTextureType_SHININESS);
             }
         }
+        
+        if ( 0 != pCurrentMaterial->textureMetallic.length )
+        {
+            mat->AddProperty( &pCurrentMaterial->textureMetallic, AI_MATKEY_TEXTURE_METALLIC(0));
+            mat->AddProperty( &uvwIndex, 1, AI_MATKEY_UVWSRC_METALLIC(0) );
+            if (pCurrentMaterial->clamp[ObjFile::Material::TextureMetallicType])
+            {
+                addTextureMappingModeProperty(mat, aiTextureType_METALLIC);
+            }
+        }
+        
+        if ( 0 != pCurrentMaterial->textureRoughness.length )
+        {
+            mat->AddProperty( &pCurrentMaterial->textureRoughness, AI_MATKEY_TEXTURE_ROUGHNESS(0));
+            mat->AddProperty( &uvwIndex, 1, AI_MATKEY_UVWSRC_ROUGHNESS(0) );
+            if (pCurrentMaterial->clamp[ObjFile::Material::TextureRoughnessType])
+            {
+                addTextureMappingModeProperty(mat, aiTextureType_ROUGHNESS);
+            }
+        }
 
         // Store material property info in material array in scene
         pScene->mMaterials[ pScene->mNumMaterials ] = mat;

@@ -220,7 +220,16 @@ void ObjExporter::WriteMaterialFile()
             mOutputMat << "bump " << s.data << endl;
             mOutputMat << "map_bump " << s.data << endl;
         }
-
+        if(AI_SUCCESS == mat->Get(AI_MATKEY_TEXTURE_METALLIC(0),s)) {
+            mOutputMat << "map_Pm " << s.data << endl;
+        }
+        if(AI_SUCCESS == mat->Get(AI_MATKEY_TEXTURE_ROUGHNESS(0),s)) {
+            mOutputMat << "map_Pr " << s.data << endl;
+        }
+        if(AI_SUCCESS == mat->Get(AI_MATKEY_TEXTURE_EMISSIVE(0),s)) {
+            mOutputMat << "map_Ke " << s.data << endl;
+        }
+        
         mOutputMat << endl;
     }
 }

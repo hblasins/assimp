@@ -141,6 +141,8 @@ struct Material {
     aiString textureSpecularity;
     aiString textureOpacity;
     aiString textureDisp;
+    aiString textureMetallic;
+    aiString textureRoughness;
 
     enum TextureType {
         TextureDiffuseType = 0,
@@ -159,6 +161,8 @@ struct Material {
         TextureSpecularityType,
         TextureOpacityType,
         TextureDispType,
+        TextureMetallicType,
+        TextureRoughnessType,
         TextureTypeCount
     };
     bool clamp[TextureTypeCount];
