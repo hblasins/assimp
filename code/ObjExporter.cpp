@@ -207,7 +207,15 @@ void ObjExporter::WriteMaterialFile()
             illum = 2;
         }
 
-        mOutputMat << "illum " << illum << endl;
+        // If the shading model exists we write it out
+        // Otherwise we provide one which is equal to 1 or 2.
+        ai_int m;
+        if (AI_SUCCESS == mat->Get(AI_MATKEY_SHADING_MODEL,m) && m) {
+            mOutputMat << "illum " << m << endl;
+        } else
+        {
+            mOutputMat << "illum " << illum << endl;
+        }
 
         aiString s;
         if(AI_SUCCESS == mat->Get(AI_MATKEY_TEXTURE_DIFFUSE(0),s)) {

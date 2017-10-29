@@ -584,20 +584,32 @@ void ObjFileImporter::createMaterials(const ObjFile::Model* pModel, aiScene* pSc
 
         // convert illumination model
         int sm = 0;
-        switch (pCurrentMaterial->illumination_model)
+        
+        //
+        if (pCurrentMaterial->illumination_model < 20)
         {
-        case 0:
-            sm = aiShadingMode_NoShading;
-            break;
-        case 1:
-            sm = aiShadingMode_Gouraud;
-            break;
-        case 2:
-            sm = aiShadingMode_Phong;
-            break;
-        default:
-            sm = aiShadingMode_Gouraud;
-            DefaultLogger::get()->error("OBJ: unexpected illumination model (0-2 recognized)");
+            // Proceed normally using vanilla ASSIMP
+            switch (pCurrentMaterial->illumination_model)
+            {
+                case 0:
+                    sm = aiShadingMode_NoShading;
+                    break;
+                case 1:
+                    sm = aiShadingMode_Gouraud;
+                    break;
+                case 2:
+                    sm = aiShadingMode_Phong;
+                    break;
+                default:
+                    sm = aiShadingMode_Gouraud;
+                    DefaultLogger::get()->error("OBJ: unexpected illumination model (0-2 recognized)");
+            }
+        } else
+        {
+            // Modify the behaviour so that illumination model
+            // Represents PBRT material type
+            // In this case we leave the illlumination model unchanged
+            sm = pCurrentMaterial->illumination_model;
         }
 
         mat->AddProperty<int>( &sm, 1, AI_MATKEY_SHADING_MODEL);
